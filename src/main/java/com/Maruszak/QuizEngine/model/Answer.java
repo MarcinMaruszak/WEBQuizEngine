@@ -1,4 +1,4 @@
-package com.Maruszak.QuizEngine.domain;
+package com.Maruszak.QuizEngine.model;
 
 import org.springframework.stereotype.Component;
 

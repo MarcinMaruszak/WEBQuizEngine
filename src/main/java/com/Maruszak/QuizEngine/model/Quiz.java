@@ -1,6 +1,5 @@
-package com.Maruszak.QuizEngine.Quiz;
+package com.Maruszak.QuizEngine.model;
 
-import com.Maruszak.QuizEngine.User.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.stereotype.Component;

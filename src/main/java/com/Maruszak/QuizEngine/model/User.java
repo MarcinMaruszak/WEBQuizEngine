@@ -1,6 +1,5 @@
-package com.Maruszak.QuizEngine.User;
+package com.Maruszak.QuizEngine.model;
 
-import com.Maruszak.QuizEngine.Quiz.Quiz;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,63 +1,52 @@
-package com.Maruszak.QuizEngine.Quiz;
+package com.Maruszak.QuizEngine.services;
 
-import com.Maruszak.QuizEngine.SolvedQuiz.SolvedQuiz;
-import com.Maruszak.QuizEngine.SolvedQuiz.SolvedQuizRepository;
-import com.Maruszak.QuizEngine.User.User;
-import com.Maruszak.QuizEngine.User.UserRepository;
-import com.Maruszak.QuizEngine.domain.Answer;
-import com.Maruszak.QuizEngine.domain.Response;
+import com.Maruszak.QuizEngine.model.*;
+import com.Maruszak.QuizEngine.repository.QuizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
+@Service
+public class QuizServiceImpl implements QuizService{
 
-@RestController
-public class QuizController {
     @Autowired
     QuizRepository quizRepository;
+
     @Autowired
-    UserRepository userRepository;
+    UserDetailsServiceImpl userService;
+
     @Autowired
-    SolvedQuizRepository solvedQuizRepository;
+    SolvedQuizServiceImpl solvedQuizService;
 
-
-    public QuizController() {
-    }
-
-
-    @GetMapping(path = "/api/quizzes")
-    public Page<Quiz> getAllQuizzes(@RequestParam(defaultValue = "0") Integer page) {
-        Pageable pageable = PageRequest.of(page,10);
+    @Override
+    public Page<Quiz> findAll(Pageable pageable) {
         return quizRepository.findAll(pageable);
-
     }
 
-    @PostMapping(path = "/api/quizzes")
-    public Quiz addQuiz(@RequestBody @Valid Quiz quiz) {
+    @Override
+    public Quiz addQuiz(Quiz quiz) {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findByEmail(username);
+        User user = (User) userService.loadUserByUsername(username);
         quiz.setUser(user);
         quizRepository.save(quiz);
         return quiz;
     }
 
-    @GetMapping(path = "api/quizzes/{id}")
-    public Quiz getQuiz(@PathVariable long id) {
-        return quizRepository.findById(id).
-                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Quiz not found"));
+    @Override
+    public Quiz getQuiz(long id) {
+        return quizRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Quiz not found"));
     }
 
-    @PostMapping(path = "/api/quizzes/{id}/solve")
-    public Response solve(@PathVariable long id, @RequestBody Answer answerObject) {
+    @Override
+    public Response solve(long id, Answer answerObject) {
         int[] answer = answerObject.getAnswer();
         if (answer != null) {
             Arrays.sort(answer);
@@ -75,31 +64,31 @@ public class QuizController {
         }
         if (Arrays.equals(answer, correctAnswers)) {
             String userName = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            User user = userRepository.findByEmail(userName);
+            User user = (User) userService.loadUserByUsername(userName);
             SolvedQuiz solvedQuiz = new SolvedQuiz();
             solvedQuiz.setId(quiz.getId());
             solvedQuiz.setCompletedAt(LocalDateTime.now());
             solvedQuiz.setUser(user);
-            solvedQuizRepository.save(solvedQuiz);
+            solvedQuizService.save(solvedQuiz);
 
             return new Response(true, "Congratulations, you're right!");
         }
         return new Response(false, "Wrong answer! Please, try again.");
     }
 
-    @DeleteMapping(path = "/api/quizzes/{id}")
-    public void delete(@PathVariable long id) {
+    @Override
+    public void delete(long id) {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         Quiz quiz = quizRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         if (quiz != null) {
-            User user = userRepository.findByEmail(username);
+            User user = (User) userService.loadUserByUsername(username);
             if (quizRepository.getOne(id).getUser().equals(user)) {
                 quizRepository.deleteById(id);
                 throw new ResponseStatusException(HttpStatus.NO_CONTENT);
             } else {
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not an author of quiz, cannot delete");
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not an author of a quiz, cannot delete");
             }
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
