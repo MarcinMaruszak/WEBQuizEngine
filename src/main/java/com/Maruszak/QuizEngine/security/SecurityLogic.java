@@ -1,4 +1,4 @@
-package com.Maruszak.QuizEngine.Security;
+package com.Maruszak.QuizEngine.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,16 +12,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.sql.DataSource;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityLogic extends WebSecurityConfigurerAdapter {
 
     @Autowired
     UserDetailsService userDetailsService;
-    @Autowired
-    DataSource dataSource;
+
     @Autowired
     AuthenticationProvider authenticationProvider;
 

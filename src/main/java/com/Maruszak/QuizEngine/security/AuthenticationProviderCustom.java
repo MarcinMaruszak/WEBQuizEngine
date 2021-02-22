@@ -1,4 +1,4 @@
-package com.Maruszak.QuizEngine.Security;
+package com.Maruszak.QuizEngine.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
