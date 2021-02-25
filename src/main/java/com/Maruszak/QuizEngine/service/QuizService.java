@@ -1,4 +1,4 @@
-package com.Maruszak.QuizEngine.services;
+package com.Maruszak.QuizEngine.service;
 
 import com.Maruszak.QuizEngine.model.Answer;
 import com.Maruszak.QuizEngine.model.Quiz;

@@ -3,7 +3,7 @@ package com.Maruszak.QuizEngine.controller;
 import com.Maruszak.QuizEngine.model.Answer;
 import com.Maruszak.QuizEngine.model.Quiz;
 import com.Maruszak.QuizEngine.model.Response;
-import com.Maruszak.QuizEngine.services.QuizServiceImpl;
+import com.Maruszak.QuizEngine.service.QuizServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

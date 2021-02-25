@@ -2,7 +2,7 @@ package com.Maruszak.QuizEngine.controller;
 
 
 import com.Maruszak.QuizEngine.model.User;
-import com.Maruszak.QuizEngine.services.UserDetailsServiceImpl;
+import com.Maruszak.QuizEngine.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

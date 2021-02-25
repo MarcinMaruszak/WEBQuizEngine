@@ -1,7 +1,7 @@
 package com.Maruszak.QuizEngine.controller;
 
 import com.Maruszak.QuizEngine.model.SolvedQuiz;
-import com.Maruszak.QuizEngine.services.SolvedQuizServiceImpl;
+import com.Maruszak.QuizEngine.service.SolvedQuizServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;

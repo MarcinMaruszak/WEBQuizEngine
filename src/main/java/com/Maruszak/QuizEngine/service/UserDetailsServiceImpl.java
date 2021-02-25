@@ -1,4 +1,4 @@
-package com.Maruszak.QuizEngine.services;
+package com.Maruszak.QuizEngine.service;
 
 import com.Maruszak.QuizEngine.model.User;
 import com.Maruszak.QuizEngine.repository.UserRepository;

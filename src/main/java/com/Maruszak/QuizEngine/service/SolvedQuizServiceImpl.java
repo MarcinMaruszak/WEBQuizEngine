@@ -1,4 +1,4 @@
-package com.Maruszak.QuizEngine.services;
+package com.Maruszak.QuizEngine.service;
 
 import com.Maruszak.QuizEngine.model.SolvedQuiz;
 import com.Maruszak.QuizEngine.model.User;
@@ -30,7 +30,7 @@ public class SolvedQuizServiceImpl implements SolvedQuizService{
     }
 
     @Override
-    public void save(SolvedQuiz solvedQuizquiz) {
-        solvedQuizRepository.save(solvedQuizquiz);
+    public void save(SolvedQuiz solvedQuiz) {
+        solvedQuizRepository.save(solvedQuiz);
     }
 }

@@ -1,4 +1,4 @@
-package com.Maruszak.QuizEngine.services;
+package com.Maruszak.QuizEngine.service;
 
 import com.Maruszak.QuizEngine.model.SolvedQuiz;
 import org.springframework.data.domain.Page;
